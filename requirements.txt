@@ -1,0 +1,9 @@
+openai
+langchain
+langchain_openai
+langchain_community
+langchain-pinecone
+streamlit
+tiktoken
+streamlit
+streamlit-chat
