@@ -84,7 +84,7 @@ def clear_history():
 st.html(
 """
 <style>
-    .stChatMessage:has(.chat-assistant) {
+    .stChatMessage:has(.chat-user) {
         flex-direction: row-reverse;
         text-align: right;
     }
@@ -173,9 +173,10 @@ if __name__ == "__main__":
     if prompt := st.chat_input("Ask a question about Finance news"):
         # Display user message in chat message container
         with st.chat_message("user"):
+            st.html(f"<span class='chat-user'></span>")
             st.markdown(prompt)
-        # Add user message to chat history
-        st.session_state.messages.append({"role": "user", "content": prompt})
+            # Add user message to chat history
+            st.session_state.messages.append({"role": "user", "content": prompt})
 
         # if there's a vector store (with embedded financial news data)
         if 'vs' in st.session_state:
@@ -188,11 +189,12 @@ if __name__ == "__main__":
                     prompt,
                     st.session_state.messages)
 
-            # Display assistant response in chat message container
-            with st.chat_message("assistant"):
-                st.html(f"<span class='chat-assistant'></span>")
-                response = st.write_stream(stream_response_generator(answer))
-            # Add assistant response to chat history
-            st.session_state.messages.append({"role": "assistant", "content": response})
+                # Display assistant response in chat message container
+                with st.chat_message("assistant"):
+                    st.markdown(answer)
+                    # response = st.write_stream(stream_response_generator(answer))
+                # Add assistant response to chat history
+                st.session_state.messages.append({"role": "assistant", "content": answer})
+                # st.session_state.messages.append({"role": "assistant", "content": response})
 
 # run the app: streamlit run ./streamlit_app.py
